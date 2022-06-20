@@ -1,28 +1,4 @@
-It's my Golang project for learning
 
-Routes:
-  1. Index
-    1.1 GET("/", index())
-  2. Tickets
-    2.1. GET("/tickets/", GetAllTickets())
-    2.2. GET("tickets/:id", GetTicket())
-    2.3. POST("tickets/", AddTicket())
-    2.4. PUT("tickets/:id", UpdateTicket())
-    2.5. DELETE("tickets/:id", DeleteTicket())
-  3. Clients
-    3.1. GET("/clients/", GetAllClients())
-    3.2. GET("clients/:id", GetClient())
-    3.3. POST("clients/", AddClient())
-    3.4. PUT("clients/:id", UpdateClient())
-    3.5. DELETE("clients/:id", DeleteClient())
-  4. Staff
-    4.1. GET("/staff/", GetAllStaff())
-    4.2. GET("staff/:id", GetEmployee())
-    4.3. POST("staff/", AddEmployee())
-    4.4. PUT("staff/:id", UpdateEmployee())
-    4.5. DELETE("staff/:id", DeleteEmployee())
-    
- 
 # Тестовое задание
 
 - [Тестовое задание](#тестовое-задание)
