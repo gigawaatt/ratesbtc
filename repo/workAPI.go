@@ -294,6 +294,69 @@ func GetValcursWithBTC(w http.ResponseWriter, r *http.Request) {
 
 }
 
+func GetAllValcursWithBTC(w http.ResponseWriter, r *http.Request) {
+
+	var rates []Rates
+
+	db := Init()
+	stmt := "SELECT * FROM ratescurs"
+	result, err := db.Query(stmt)
+	if err != nil {
+		log.Println(err)
+		jsonError, _ := json.Marshal(err)
+		w.Write(jsonError)
+	}
+
+	var jsonBTCDB BTCUSDT
+	stmt = "SELECT * FROM btc WHERE id = (SELECT MAX(id) FROM btc)"
+	err = db.QueryRow(stmt).Scan(&jsonBTCDB.Id, &jsonBTCDB.Time, &jsonBTCDB.AveragePrice)
+	if err != nil {
+		fmt.Println(err)
+		jsonError, _ := json.Marshal(err)
+		w.Write(jsonError)
+	}
+	defer db.Close()
+
+	var total uint = 0
+
+	for result.Next() {
+		var rate Rates
+		if err := result.Scan(&rate.Id, &rate.Date, &rate.Aud, &rate.Azn,
+			&rate.Gbp, &rate.Amd, &rate.Byn, &rate.Bgn, &rate.Brl, &rate.Huf,
+			&rate.Hkd, &rate.Dkk, &rate.Usd, &rate.Eur, &rate.Inr, &rate.Kzt,
+			&rate.Cad, &rate.Kgs, &rate.Cny, &rate.Mdl, &rate.Nok, &rate.Pln,
+			&rate.Ron, &rate.Xdr, &rate.Sgd, &rate.Tjs, &rate.Try,
+			&rate.Tmt, &rate.Uzs, &rate.Uah, &rate.Czk, &rate.Sek, &rate.Chf, &rate.Zar,
+			&rate.Krw, &rate.Jpy); err != nil {
+			fmt.Fprintf(w, "Error data : %v", err)
+		}
+		res := rates2BTC(rate, jsonBTCDB.AveragePrice)
+		res.Id = rate.Id
+		res.Date = rate.Date
+		rates = append(rates, res)
+		total++
+	}
+
+	var allinfo AllRates
+	allinfo.Total = total
+	allinfo.Rates = rates
+
+	jsonResponse, jsonError := json.Marshal(allinfo)
+	if jsonError != nil {
+		fmt.Println("Unable to encode JSON")
+		jsonError, _ := json.Marshal(jsonError)
+		w.Write(jsonError)
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write(jsonResponse)
+	if err != nil {
+		log.Println(err)
+		jsonError, _ := json.Marshal(err)
+		w.Write(jsonError)
+	}
+}
+
 func GetValute(w http.ResponseWriter, r *http.Request) {
 
 	code, _ := mux.Vars(r)["id"]
