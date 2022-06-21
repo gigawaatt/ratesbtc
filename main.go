@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/gigawaatt/Golang/repo"
-	"github.com/gigawaatt/Golang/server"
+	"github.com/gigawaatt/ratebtc/repo"
+	"github.com/gigawaatt/ratebtc/server"
 )
 
 func main() {

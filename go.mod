@@ -1,4 +1,4 @@
-module github.com/gigawaatt/Golang
+module github.com/gigawaatt/ratebtc
 
 go 1.18
 

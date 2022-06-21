@@ -1,7 +1,7 @@
 package server
 
 import (
-	"github.com/gigawaatt/Golang/repo"
+	"github.com/gigawaatt/ratebtc/repo"
 	"github.com/gorilla/mux"
 )
 
